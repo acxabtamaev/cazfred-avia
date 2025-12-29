@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MineSlot - Твой Путь к Победе</title>
+
+  <!-- Google Fonts: VT323 for Pixel look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="video/promo.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="image/hero.jpg" as="image">
+
+  <style>
+    :root {
+      --mc-green: #59b200;
+      --mc-green-light: #76e300;
+      --mc-green-dark: #376e00;
+      --mc-gold: #ffd700;
+      --mc-gold-light: #fff0a5;
+      --mc-diamond: #42e3f5;
+      --mc-bg: #1a1a1a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #2e2e2e;
+      background-image:
+        linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+        linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+        linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+      background-size: 20px 20px;
+
+      color: #fff;
+      font-family: "VT323", monospace;
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    /* Ambient particles background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--mc-green);
+      opacity: 0.3;
+      animation: float-up 10s infinite linear;
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.3;
+      }
+
+      90% {
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-cube {
+      width: 40px;
+      height: 40px;
+      background: var(--mc-green);
+      border: 4px solid #000;
+      animation: jump 0.6s infinite alternate;
+      box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes jump {
+      from {
+        transform: translateY(0) scaleX(1.1);
+      }
+
+      to {
+        transform: translateY(-30px) scaleX(0.9);
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 360px;
+      /* narrowed per request */
+      z-index: 10;
+      display: none;
+      animation: slide-up 0.8s ease-out forwards;
+    }
+
+    .container.visible {
+      display: block;
+    }
+
+    @keyframes slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 60px;
+      color: #fff;
+      text-shadow:
+        4px 4px 0 #3f3f3f,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        4px 4px 0 #000;
+      margin-bottom: 20px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .video-section {
+      width: 100%;
+      max-width: 300px;
+      /* shrink visuals */
+      margin: 0 auto 30px;
+      border: 6px solid #5a5a5a;
+      background: #000;
+      position: relative;
+      box-shadow: 0 12px 0 #121212;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .video-section:hover video {
+      transform: scale(1.05);
+    }
+
+    .call-to-action {
+      font-size: 28px;
+      color: var(--mc-gold);
+      text-shadow: 2px 2px 0 #000;
+      margin-bottom: 10px;
+      animation: blink 1.2s infinite;
+      text-transform: uppercase;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+      }
+    }
+
+    .instruction-arrow {
+      font-size: 32px;
+      margin-bottom: 5px;
+      animation: bounce-arrow 1s infinite;
+    }
+
+    @keyframes bounce-arrow {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    .mine-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 10px;
+      font-family: inherit;
+      font-size: 30px;
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 4px solid #000;
+      cursor: pointer;
+      background-color: var(--mc-green);
+      box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, 0.4),
+        inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+        0 8px 0 var(--mc-green-dark);
+      transition: all 0.1s;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .mine-btn:hover {
+      background-color: var(--mc-green-light);
+      transform: translateY(-2px);
+      box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, 0.4),
+        inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+        0 10px 0 var(--mc-green-dark);
+    }
+
+    .mine-btn:active {
+      transform: translateY(8px);
+      box-shadow: 0 0 0 transparent;
+    }
+
+    .mine-btn.secondary {
+      background-color: #0088cc;
+      /* Telegram brand blue */
+      font-size: 24px;
+      box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, 0.4),
+        inset -4px -4px 0 rgba(0, 0, 0, 0.4),
+        0 8px 0 #006699;
+    }
+
+    .start-text {
+      font-size: 20px;
+      color: #aaa;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .popup.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: #aaaaaa;
+      border: 6px solid #000;
+      padding: 30px 15px;
+      max-width: 320px;
+      width: 100%;
+      box-shadow: 0 20px 0 #000;
+      position: relative;
+    }
+
+    .popup-content::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 2px solid #fff;
+      pointer-events: none;
+    }
+
+    .popup h3 {
+      font-size: 48px;
+      color: #ffaa00;
+      text-shadow: 3px 3px 0 #000;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .popup p {
+      font-size: 22px;
+      color: #333;
+      margin-bottom: 25px;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-cube"></div>
+    <div style="margin-top: 15px; font-size: 24px; color: var(--mc-gold);">LOADING...</div>
+  </div>
+
+  <div class="container" id="mainContent">
+    <h1>MINESLOT</h1>
+
+    <div class="video-section">
+      <video id="promoVideo" preload="auto" poster="image/hero.jpg" playsinline>
+        <source src="video/promo.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- Instruction Text -->
+    <div class="call-to-action">КЛИКАЙ ПО КНОПКЕ!</div>
+    <div class="instruction-arrow">👇</div>
+
+    <!-- Main Play Button -->
+    <button class="mine-btn" id="playBtn">ИСПЫТАТЬ УДАЧУ</button>
+
+    <a href="https://t.me/+bd2X6acazWxkMGYy" target="_blank" class="mine-btn secondary">ПЕРЕЙТИ В TELEGRAM ⛏️</a>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h3>ПОБЕДА!</h3>
+      <p>Твой выигрыш: 70 200 ₽<br>Забери его в Telegram!</p>
+      <a href="https://t.me/+bd2X6acazWxkMGYy" target="_blank" class="mine-btn secondary">ЗАБРАТЬ ДЕНЬГИ ⛏️</a>
+    </div>
+  </div>
+
+  <script>
+    // Create Particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.backgroundColor = i % 2 === 0 ? '#59b200' : '#ffd700'; // Multi-color particles
+      particlesContainer.appendChild(p);
+    }
+
+    const video = document.getElementById('promoVideo');
+    const playBtn = document.getElementById('playBtn');
+    const popup = document.getElementById('popup');
+    const preloader = document.getElementById('preloader');
+    const mainContent = document.getElementById('mainContent');
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+        mainContent.classList.add('visible');
+        video.load();
+      }, 700);
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (navigator.vibrate) navigator.vibrate(50);
+      playBtn.style.display = 'none';
+      // Hide the instruction text when video starts
+      document.querySelector('.call-to-action').style.display = 'none';
+      document.querySelector('.instruction-arrow').style.display = 'none';
+
+      video.muted = false;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          video.muted = true;
+          video.play();
+        });
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      popup.classList.add('active');
+    });
+  </script>
+</body>
+
+</html>
